@@ -1,4 +1,7 @@
-load data local infile 'incident_reason.csv' into table incident_reason
-fields terminated by ','
-enclosed by '"'
-lines terminated by '\r';
+TRUNCATE TABLE incident_reason;
+LOAD DATA LOCAL INFILE 'incident_reason.csv'
+INTO TABLE incident_reason
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\r'
+IGNORE 1 LINES;

@@ -1,4 +1,7 @@
-load data local infile 'stanox_codes.csv' into table stanox_codes
-fields terminated by ','
-enclosed by '"'
-lines terminated by '\r';
+TRUNCATE TABLE stanox_codes;
+LOAD DATA LOCAL INFILE 'stanox_codes.csv'
+INTO TABLE stanox_codes
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\r'
+IGNORE 1 LINES;
