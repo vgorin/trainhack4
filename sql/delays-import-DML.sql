@@ -1,7 +1,8 @@
 load data local infile 'Delay-Incident-v1_2-1718-P1.csv' into table delays
 fields terminated by ','
 enclosed by '"'
-lines terminated by '\r\n'
+lines terminated by '\r\n';
+/*
 (
     `Financial Year & Period`,
     Date,
@@ -43,3 +44,4 @@ lines terminated by '\r\n'
     `Train ID - Resp`,
     `Train ID - React`
 );
+*/
