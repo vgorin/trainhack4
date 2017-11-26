@@ -1,7 +1,9 @@
 package com.trainhack.geoinc;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
+import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
@@ -13,10 +15,17 @@ import javax.ws.rs.core.MediaType;
 
 
 @Api
-@Path("/api")
+@Path("/")
 @Produces(MediaType.APPLICATION_JSON)
 public class GeoIncidentRestAPI {
-	@Path("/version")
+	@GET
+	@Path("version")
+	@ApiOperation(
+			value = "API Version",
+			notes = "Returns API Version, ex.: 0.0.1-SNAPSHOT",
+			response = String.class
+	)
+
 	public String getVersion() {
 		return "0.0.1-SNAPSHOT";
 	}

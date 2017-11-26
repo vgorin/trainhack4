@@ -19,10 +19,9 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ApplicationPath("/api")
 public class JaxRsConfig extends ResourceConfig {
-	@PostConstruct
-	public void init() {
+	public JaxRsConfig() {
 		register(GeoIncidentRestAPI.class);
-		register(ApiListingResource.class);
+//		register(ApiListingResource.class);
 		BeanConfig beanConfig = new BeanConfig();
 		beanConfig.setVersion("0.3");
 		beanConfig.setSchemes(new String[]{"http"});
