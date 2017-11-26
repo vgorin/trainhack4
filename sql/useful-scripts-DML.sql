@@ -46,12 +46,14 @@ WHERE `Incident Number` IN (
 -- incidents caused by 12 incidents originated in section 19215
 SELECT
   DISTINCT `Start Stanox`,
+  `FULL NAME`,
   Latitude,
   Longitude,
   count(`Start Stanox`) AS 'Stanox Count',
   avg(`PfPI Minutes`) AS 'Average Delay'
 FROM delays d LEFT JOIN incident_reason i ON d.`Incident Reason` = i.`Incident Reason`
 LEFT JOIN stanox_geocoding g ON g.Stanox = d.`Start Stanox`
+LEFT JOIN stanox_codes s ON s.`STANOX NO.` = d.`Start Stanox`
 WHERE `Incident Number` IN (
   SELECT
     `Incident Number`

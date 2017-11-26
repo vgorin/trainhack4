@@ -13,6 +13,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class IncidentProbability {
 	@XmlElement(name = "Stanox")
 	public int stanox;
+	@XmlElement(name = "Stanox Name")
+	public String stanoxName;
 	@XmlElement(name = "Latitude")
 	public float lat;
 	@XmlElement(name = "Longitude")
@@ -25,8 +27,9 @@ public class IncidentProbability {
 	public IncidentProbability() {
 	}
 
-	public IncidentProbability(int stanox, float lat, float lon, int stanoxCount, double avgDelay) {
+	public IncidentProbability(int stanox, String stanoxName, float lat, float lon, int stanoxCount, double avgDelay) {
 		this.stanox = stanox;
+		this.stanoxName = stanoxName;
 		this.lat = lat;
 		this.lon = lon;
 		this.stanoxCount = stanoxCount;

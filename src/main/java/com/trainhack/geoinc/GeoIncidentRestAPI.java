@@ -110,6 +110,7 @@ public class GeoIncidentRestAPI {
 				while(r.next()) {
 					probabilities.add(new IncidentProbability(
 							r.getInt("Start Stanox"),
+							r.getString("FULL NAME"),
 							r.getFloat("Latitude"),
 							r.getFloat("Longitude"),
 							r.getInt("Stanox Count"),
@@ -132,6 +133,6 @@ public class GeoIncidentRestAPI {
 			response = String.class
 	)
 	public String getVersion() {
-		return "0.0.1-SNAPSHOT";
+		return "0.0.2-SNAPSHOT";
 	}
 }
