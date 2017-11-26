@@ -1,0 +1,7 @@
+TRUNCATE TABLE stanox_geocoding;
+LOAD DATA LOCAL INFILE 'stanox_geocoding.csv'
+INTO TABLE stanox_geocoding
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\r'
+IGNORE 1 LINES;
