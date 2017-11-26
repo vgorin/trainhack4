@@ -14,27 +14,31 @@ SELECT
   `Incident Number`,
   `TSC - Affected`,
   `English Day Type`,
-  `Incident Create Date`,
   `Incident Start Datetime`,
   `Incident End Datetime`,
-  `Section Code`,
-  d.`Incident Reason`,
+  `Event Datetime`,
   `Incident Category`,
   `Incident Category Super Group Code`,
   `Incident Category Description`,
-  `Performance Event Code`,
+  `Section Code`,
   `Start Stanox`,
+  g1.Latitude AS 'Start Latitude',
+  g1.Longitude AS 'Start Longitude',
   `End Stanox`,
-  `Event Datetime`,
+  g2.Latitude AS 'End Latitude',
+  g2.Longitude AS 'End Longitude',
   `PfPI Minutes`
-FROM delays d LEFT JOIN incident_reason i ON d.`Incident Reason` = i.`Incident Reason`
+FROM delays d
+LEFT JOIN incident_reason i ON d.`Incident Reason` = i.`Incident Reason`
+LEFT JOIN stanox_geocoding g1 ON g1.Stanox = i.`Start Stanox`
+LEFT JOIN stanox_geocoding g2 ON g2.Stanox = i.`End Stanox`
 WHERE `Incident Number` IN (
   SELECT
     `Incident Number`
   FROM delays d LEFT JOIN incident_reason i ON d.`Incident Reason` = i.`Incident Reason`
   WHERE
     `Performance Event Code` NOT IN('C', 'O', 'P', 'S')
-    AND i.`Incident Category Super Group Code` IN ('NTAG', 'TAG', 'WSG', 'AG')
+    AND `Incident Category Super Group Code` IN ('NTAG', 'TAG', 'WSG', 'AG')
     AND (`Section Code` LIKE '19215%' OR `Section Code` LIKE '%19215')
     AND `Incident Start Datetime` = `Event Datetime`
 ) AND `Incident Start Datetime` < `Event Datetime`;

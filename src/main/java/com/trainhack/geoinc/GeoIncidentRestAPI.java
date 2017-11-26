@@ -25,7 +25,7 @@ import java.util.Properties;
 
 
 @Api
-@Path("/")
+@Path("/incidents")
 @Produces(MediaType.APPLICATION_JSON)
 public class GeoIncidentRestAPI {
 	@Autowired
@@ -45,16 +45,16 @@ public class GeoIncidentRestAPI {
 	}
 
 	@GET
-	@Path("incident")
+	@Path("/deriving")
 	@ApiOperation(
-			value = "",
-			notes = "",
+			value = "Get Deriving Incidents",
+			notes = "Given a section code, find out all the incidents which were caused by the incidents originating from the section specified",
 			response = List.class
 	)
-	public List<Incident> getIncident(@QueryParam("section-code") int sectionCode) {
+	public List<Incident> getDerivingIncidents(@QueryParam("section-code") int sectionCode) {
 		try(
 				Connection c = dataSource.getConnection();
-				PreparedStatement s = c.prepareStatement(p.getProperty("get-incident"))
+				PreparedStatement s = c.prepareStatement(p.getProperty("get-deriving-incidents"))
 		) {
 			List<Incident> incidents = new LinkedList<>();
 			s.setString(1, String.format("%s%%", sectionCode));
@@ -62,11 +62,23 @@ public class GeoIncidentRestAPI {
 			try(ResultSet r = s.executeQuery()) {
 				while(r.next()) {
 					incidents.add(new Incident(
-							r.getInt("Affected_Stanox"),
-							r.getFloat("Latitude"),
-							r.getFloat("Longitude"),
-							r.getInt("Number_of_Effects"),
-							r.getDouble("Delay_Avg")
+							r.getInt("Incident Number"),
+							r.getInt("TSC - Affected"),
+							r.getString("English Day Type"),
+							r.getString("Incident Start Datetime"),
+							r.getString("Incident End Datetime"),
+							r.getString("Event Datetime"),
+							r.getString("Incident Category"),
+							r.getString("Incident Category Super Group Code"),
+							r.getString("Incident Category Description"),
+							r.getString("Section Code"),
+							r.getInt("Start Stanox"),
+							r.getString("Start Latitude"),
+							r.getString("Start Longitude"),
+							r.getInt("End Stanox"),
+							r.getString("End Latitude"),
+							r.getString("End Longitude"),
+							r.getInt("PfPI Minutes")
 					));
 				}
 			}

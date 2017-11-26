@@ -4,15 +4,29 @@
 	<comment>Database Queries Storage</comment>
 
 
-	<entry key="get-incident"><![CDATA[
+	<entry key="get-deriving-incidents"><![CDATA[
 	SELECT
-	  DISTINCT `Start Stanox` AS Affected_Stanox,
-	  Latitude,
-	  Longitude,
-	  count(`Start Stanox`) AS Number_of_Effects,
-	  avg(`PfPI Minutes`) AS Delay_Avg
-	FROM delays d LEFT JOIN incident_reason i ON d.`Incident Reason` = i.`Incident Reason`
-	LEFT JOIN stanox_geocoding g ON g.Stanox = d.`Start Stanox`
+	  `Incident Number`,
+	  `TSC - Affected`,
+	  `English Day Type`,
+	  `Incident Start Datetime`,
+	  `Incident End Datetime`,
+	  `Event Datetime`,
+	  `Incident Category`,
+	  `Incident Category Super Group Code`,
+	  `Incident Category Description`,
+	  `Section Code`,
+	  `Start Stanox`,
+	  g1.Latitude AS 'Start Latitude',
+	  g1.Longitude AS 'Start Longitude',
+	  `End Stanox`,
+	  g2.Latitude AS 'End Latitude',
+	  g2.Longitude AS 'End Longitude',
+	  `PfPI Minutes`
+	FROM delays d
+	LEFT JOIN incident_reason i ON d.`Incident Reason` = i.`Incident Reason`
+	LEFT JOIN stanox_geocoding g1 ON g1.Stanox = d.`Start Stanox`
+	LEFT JOIN stanox_geocoding g2 ON g2.Stanox = d.`End Stanox`
 	WHERE `Incident Number` IN (
 	  SELECT
 		`Incident Number`
@@ -22,7 +36,6 @@
 		AND i.`Incident Category Super Group Code` IN ('NTAG', 'TAG', 'WSG', 'AG')
 		AND (`Section Code` LIKE ? OR `Section Code` LIKE ?)
 		AND `Incident Start Datetime` = `Event Datetime`
-	) AND `Incident Start Datetime` < `Event Datetime`
-	GROUP BY `Start Stanox`, Latitude, Longitude;
+	) AND `Incident Start Datetime` < `Event Datetime`;
 ]]></entry>
 </properties>
