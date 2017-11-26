@@ -1,12 +1,12 @@
-package com.hacktrain;
+package com.hacktrain.geoinc;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class GeoincidentApplication {
+public class GeoIncidentApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(GeoincidentApplication.class, args);
+		SpringApplication.run(GeoIncidentApplication.class, args);
 	}
 }
