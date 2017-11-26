@@ -8,7 +8,6 @@ package com.trainhack.geoinc;
 
 import org.glassfish.jersey.server.ResourceConfig;
 
-import javax.annotation.PostConstruct;
 import javax.ws.rs.ApplicationPath;
 
 import io.swagger.jaxrs.config.BeanConfig;
@@ -21,7 +20,7 @@ import org.springframework.context.annotation.Configuration;
 public class JaxRsConfig extends ResourceConfig {
 	public JaxRsConfig() {
 		register(GeoIncidentRestAPI.class);
-//		register(ApiListingResource.class);
+		register(ApiListingResource.class);
 		BeanConfig beanConfig = new BeanConfig();
 		beanConfig.setVersion("0.3");
 		beanConfig.setSchemes(new String[]{"http"});
