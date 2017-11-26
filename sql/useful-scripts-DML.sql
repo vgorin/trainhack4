@@ -11,7 +11,6 @@ ORDER BY count(`Incident Number`) DESC LIMIT 50;
 
 -- generic script describing the column we're probably interested in
 SELECT
-  Date,
   `Incident Number`,
   `TSC - Affected`,
   `English Day Type`,
