@@ -1,4 +1,4 @@
-package com.hacktrain.geoinc;
+package com.trainhack.geoinc;
 
 import io.swagger.annotations.Api;
 

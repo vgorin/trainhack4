@@ -1,4 +1,4 @@
-package com.hacktrain.geoinc;
+package com.trainhack.geoinc;
 
 /**
  * @author vgorin
@@ -28,8 +28,8 @@ public class JaxRsConfig extends ResourceConfig {
 		beanConfig.setSchemes(new String[]{"http"});
 		beanConfig.setHost("localhost:8080");
 		beanConfig.setBasePath("/api");
-		beanConfig.setDescription("GeoIncident REST API");
-		beanConfig.setResourcePackage("com.cmlteam");
+		beanConfig.setDescription("GeoIncident RESTful API");
+		beanConfig.setResourcePackage("com.trainhack.geoinc");
 		beanConfig.setPrettyPrint(true);
 		beanConfig.setScan(true);
 	}
