@@ -1,19 +1,17 @@
 package com.trainhack.geoinc;
 
-/**
- * @author vgorin
- *         file created on 11/26/17 2:32 AM
- */
-
-
 import org.glassfish.jersey.server.ResourceConfig;
-
-import javax.ws.rs.ApplicationPath;
-
 import io.swagger.jaxrs.config.BeanConfig;
 import io.swagger.jaxrs.listing.ApiListingResource;
 import org.springframework.context.annotation.Configuration;
 
+import javax.ws.rs.ApplicationPath;
+
+
+/**
+ * @author vgorin
+ *         file created on 11/26/17 2:32 AM
+ */
 
 @Configuration
 @ApplicationPath("/api")

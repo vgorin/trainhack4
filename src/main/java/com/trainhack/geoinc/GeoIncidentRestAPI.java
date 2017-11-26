@@ -26,7 +26,7 @@ import java.util.Properties;
 
 
 @Api
-@Path("/incidents")
+@Path("/")
 @Produces(MediaType.APPLICATION_JSON)
 public class GeoIncidentRestAPI {
 	@Autowired
@@ -46,13 +46,13 @@ public class GeoIncidentRestAPI {
 	}
 
 	@GET
-	@Path("/deriving")
+	@Path("/deriving-incidents")
 	@ApiOperation(
 			value = "Get Deriving Incidents",
 			notes = "Given a section code, find out all the incidents which were caused by the incidents originating from the section specified",
 			response = List.class
 	)
-	public List<Incident> getDerivingIncidents(@QueryParam("section-code") int sectionCode) {
+	public List<Incident> getDerivingIncidents(@QueryParam("section-code") String sectionCode) {
 		try(
 				Connection c = dataSource.getConnection();
 				PreparedStatement s = c.prepareStatement(p.getProperty("get-deriving-incidents"))
@@ -92,7 +92,7 @@ public class GeoIncidentRestAPI {
 
 
 	@GET
-	@Path("/deriving-probability")
+	@Path("/deriving-incidents-probability")
 	@ApiOperation(
 			value = "Get Deriving Incidents Probability",
 			notes = "Given a section code, find out the probabilities of an accident on adjacent sections",
@@ -125,7 +125,7 @@ public class GeoIncidentRestAPI {
 	}
 
 	@GET
-	@Path("version")
+	@Path("/version")
 	@ApiOperation(
 			value = "API Version",
 			notes = "Returns API Version, ex.: 0.0.1-SNAPSHOT",
