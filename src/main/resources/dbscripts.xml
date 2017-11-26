@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<comment>Database Queries Storage</comment>
+
+
+	<entry key="get-incident"><![CDATA[
+	DECLARE code INT(11) = ?;
+	SELECT
+	  DISTINCT `Start Stanox` AS Affected_Stanox,
+	  Latitude,
+	  Longitude,
+	  count(`Start Stanox`) AS Number_of_Effects,
+	  avg(`PfPI Minutes`) AS Delay_Avg
+	FROM delays d LEFT JOIN incident_reason i ON d.`Incident Reason` = i.`Incident Reason`
+	LEFT JOIN stanox_geocoding g ON g.Stanox = d.`Start Stanox`
+	WHERE `Incident Number` IN (
+	  SELECT
+		`Incident Number`
+	  FROM delays d LEFT JOIN incident_reason i ON d.`Incident Reason` = i.`Incident Reason`
+	  WHERE
+		`Performance Event Code` NOT IN('C', 'O', 'P', 'S')
+		AND i.`Incident Category Super Group Code` IN ('NTAG', 'TAG', 'WSG', 'AG')
+		AND (`Section Code` LIKE @code OR `Section Code` LIKE @code)
+		AND `Incident Start Datetime` = `Event Datetime`
+	) AND `Incident Start Datetime` < `Event Datetime`
+	GROUP BY `Start Stanox`, Latitude, Longitude;
+]]></entry>
+</properties>
