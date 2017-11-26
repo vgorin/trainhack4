@@ -63,3 +63,25 @@ WHERE `Incident Number` IN (
     AND `Incident Start Datetime` = `Event Datetime`
 ) AND `Incident Start Datetime` < `Event Datetime`
 GROUP BY `Start Stanox`, Latitude, Longitude;
+
+-- predicts how long it will take before the delay occurs
+SELECT
+  `Start Stanox`,
+  `PfPI Minutes`,
+  `Operator Name - Affected`,
+  (`Event Datetime` - `Incident Start Datetime`) / 60
+FROM delays d LEFT JOIN incident_reason i ON d.`Incident Reason` = i.`Incident Reason`
+LEFT JOIN stanox_geocoding g ON g.Stanox = d.`Start Stanox`
+LEFT JOIN operator_name o ON o.`Operator - Affected` = d.`Operator - Affected`
+WHERE `Incident Number` IN (
+  SELECT
+    `Incident Number`
+  FROM delays d LEFT JOIN incident_reason i ON d.`Incident Reason` = i.`Incident Reason`
+  WHERE
+    `Performance Event Code` NOT IN('C', 'O', 'P', 'S')
+    AND `Incident Category Super Group Code` IN ('NTAG', 'TAG', 'WSG', 'AG')
+    AND (`Section Code` LIKE '19215%' OR `Section Code` LIKE '%19215')
+    AND `Incident Start Datetime` = `Event Datetime`
+) AND `Incident Start Datetime` < `Event Datetime`
+ORDER BY `Start Stanox`, `Event Datetime` - `Incident Start Datetime`;
+
