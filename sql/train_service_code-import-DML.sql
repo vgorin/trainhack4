@@ -1,0 +1,7 @@
+TRUNCATE TABLE train_service_code;
+LOAD DATA LOCAL INFILE 'train_service_code.csv'
+INTO TABLE train_service_code
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\r'
+IGNORE 1 LINES;
