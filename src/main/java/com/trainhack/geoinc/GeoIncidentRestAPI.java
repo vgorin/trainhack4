@@ -1,6 +1,7 @@
 package com.trainhack.geoinc;
 
 import com.trainhack.geoinc.model.Incident;
+import com.trainhack.geoinc.model.IncidentProbability;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,6 +90,39 @@ public class GeoIncidentRestAPI {
 		}
 	}
 
+
+	@GET
+	@Path("/deriving-probability")
+	@ApiOperation(
+			value = "Get Deriving Incidents Probability",
+			notes = "Given a section code, find out the probabilities of an accident on adjacent sections",
+			response = List.class
+	)
+	public List<IncidentProbability> getDerivingIncidentsProbability(@QueryParam("section-code") int sectionCode) {
+		try(
+				Connection c = dataSource.getConnection();
+				PreparedStatement s = c.prepareStatement(p.getProperty("get-deriving-incidents-probability"))
+		) {
+			List<IncidentProbability> probabilities = new LinkedList<>();
+			s.setString(1, String.format("%s%%", sectionCode));
+			s.setString(2, String.format("%%%s", sectionCode));
+			try(ResultSet r = s.executeQuery()) {
+				while(r.next()) {
+					probabilities.add(new IncidentProbability(
+							r.getInt("Start Stanox"),
+							r.getFloat("Latitude"),
+							r.getFloat("Longitude"),
+							r.getInt("Stanox Count"),
+							r.getDouble("Average Delay")
+					));
+				}
+			}
+			return probabilities;
+		}
+		catch(SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
 
 	@GET
 	@Path("version")

@@ -36,7 +36,7 @@ public class Incident {
 	@XmlElement(name = "Start Latitude")
 	public String statLat;
 	@XmlElement(name = "Start Longitude")
-	public String statLong;
+	public String statLon;
 	@XmlElement(name = "End Stanox")
 	public int endStanox;
 	@XmlElement(name = "End Latitude")
@@ -62,7 +62,7 @@ public class Incident {
 		this.sectionCode = sectionCode;
 		this.startStanox = startStanox;
 		this.statLat = statLat;
-		this.statLong = statLong;
+		this.statLon = statLong;
 		this.endStanox = endStanox;
 		this.endLat = endLat;
 		this.endLong = endLong;
