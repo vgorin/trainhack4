@@ -57,7 +57,8 @@ public class GeoIncidentRestAPI {
 				PreparedStatement s = c.prepareStatement(p.getProperty("get-incident"))
 		) {
 			List<Incident> incidents = new LinkedList<>();
-			s.setInt(1, sectionCode);
+			s.setString(1, String.format("%s%%", sectionCode));
+			s.setString(2, String.format("%%%s", sectionCode));
 			try(ResultSet r = s.executeQuery()) {
 				while(r.next()) {
 					incidents.add(new Incident(
